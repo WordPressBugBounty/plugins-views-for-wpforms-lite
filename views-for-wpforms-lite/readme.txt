@@ -4,7 +4,7 @@ Tags: wpforms, database, display entries, table
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.6
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv2 or later
 
 Display and Edit WPForms Entries Directly on Your Website with No Coding Knowledge Needed.
@@ -168,6 +168,10 @@ No, you can create as many Views as you like &amp; use it anywhere on your site 
 3. Submissions shown in frontend.
 
 == Changelog ==
+3.3.2 (22nd Oct 2024)
+Fix: Resolved an issue where the View Settings tab became unclickable after selecting a field in the Editing view.
+Update: Upgraded WordPress scripts and React libraries to the latest versions.
+
 3.3.1 (9th Aug 2024)
 Fix: Fixed Help menu not working.
 Tweak: Added notice if WPForms Pro is not installed.
