@@ -4,7 +4,7 @@ Tags: wpforms, database, display entries, table
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.7
-Stable tag: 3.3.3
+Stable tag: 3.3.4
 License: GPLv2 or later
 
 Display and Edit WPForms Entries Directly on Your Website with No Coding Knowledge Needed.
@@ -168,8 +168,11 @@ No, you can create as many Views as you like &amp; use it anywhere on your site 
 3. Submissions shown in frontend.
 
 == Changelog ==
+3.3.4 (23rd Nov 2024)
+New: Entry Date is now available in free version.
+
 3.3.3 (20th Nov 2024)
-Fix: Fxied an issue when deleting a Field from View can cause white screen if Field settings are opened.
+Fix: Fixed an issue when deleting a Field from View can cause white screen if Field settings are opened.
 
 3.3.2 (22nd Oct 2024)
 Fix: Resolved an issue where the View Settings tab became unclickable after selecting a field in the Editing view.

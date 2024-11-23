@@ -349,6 +349,16 @@ class WPForms_Views_Shortcode {
 					$field_html .= $this->seq_no;
 					$field_html .= '</div>';
 					break;
+				case 'entryDate':
+					$field_html .= '<div class="wpforms-view-field-value wpforms-view-field-type-entryDate-value">';
+					$field_html .=  $this->get_formatted_date( $entry->date, $fieldSettings, '', true );
+					$field_html .= '</div>';
+					break;
+				case 'entryUpdateDate':
+					$field_html .= '<div class="wpforms-view-field-value wpforms-view-field-type-entryUpdateDate-value">';
+					$field_html .=  $this->get_formatted_date( $entry->date_modified, $fieldSettings, '', true );
+					$field_html .= '</div>';
+					break;
 			}
 		}
 
@@ -440,6 +450,24 @@ class WPForms_Views_Shortcode {
 
 		return $html;
 
+	}
+
+	public function get_formatted_date( $date, $fieldSettings, $format = '', $gmt_offset = false ) {
+		if ( ! empty( $fieldSettings->displayTime ) ) {
+			$format = sprintf( '%s %s', get_option( 'date_format' ), get_option( 'time_format' ) );
+		} else {
+			$format = sprintf( '%s', get_option( 'date_format' ) );
+		}
+
+		if ( is_string( $date ) ) {
+			$date = strtotime( $date );
+		}
+
+		if ( $gmt_offset ) {
+			$date += (int) ( get_option( 'gmt_offset' ) * HOUR_IN_SECONDS );
+		}
+
+		return date_i18n( $format, $date );
 	}
 
 }
