@@ -46,9 +46,10 @@ class WPForms_Views_LiteEditor {
 			$wpforms_views_config = apply_filters(
 				'wpforms_views_config',
 				array(
-					'prefix' => 'wpforms',
-					'addons' => array( '' ),
-					'nonce'  => wp_create_nonce( 'wpf-views-builder' ),
+					'prefix'   => 'wpforms',
+					'addons'   => array( '' ),
+					'adminUrl' => admin_url( 'admin.php' ),
+					'nonce'    => wp_create_nonce( 'wpf-views-builder' ),
 				)
 			);
 
