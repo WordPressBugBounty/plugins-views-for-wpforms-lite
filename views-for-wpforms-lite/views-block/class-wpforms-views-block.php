@@ -43,7 +43,13 @@ class WPF_Views_Block {
 	}
 
 	function render_block( $attributes, $content, $block ) {
-		$view_id = get_post_meta( get_the_ID(), '_view_id', true );
+		// 1. First, check for block attribute
+		$view_id = isset( $attributes['_view_id'] ) ? sanitize_text_field( $attributes['_view_id'] ) : '';
+
+		// 2. Fallback to post meta if attribute is empty
+		if ( empty( $view_id ) ) {
+			$view_id = get_post_meta( get_the_ID(), '_view_id', true );
+		}
 
 		if ( ! empty( $view_id ) ) {
 			return '<div ' . get_block_wrapper_attributes() . '>' . do_shortcode( '[wpforms-views id=' . $view_id . ']' ) . '</div>';

@@ -32,25 +32,40 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-function Edit() {
+
+function Edit({
+  attributes,
+  setAttributes
+}) {
   const blockProps = (0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.useBlockProps)();
-  const postType = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => select('core/editor').getCurrentPostType(), []);
-  const [meta, setMeta] = (0,_wordpress_core_data__WEBPACK_IMPORTED_MODULE_4__.useEntityProp)('postType', postType, 'meta');
-  const _view_id = meta['_view_id'];
+  const fallbackViewId = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_3__.useSelect)(select => {
+    const postType = select('core/editor').getCurrentPostType();
+    const meta = select('core/editor').getEditedPostAttribute('meta');
+    return meta?._view_id;
+  }, []);
+  const _view_id = attributes._view_id || fallbackViewId;
   const viewsList = window.wp_views_block.views;
   const updateViewId = newValue => {
-    setMeta({
-      ...meta,
+    setAttributes({
       _view_id: newValue
     });
   };
+
+  // Initialize attribute from meta once
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    if (!attributes._view_id && fallbackViewId) {
+      setAttributes({
+        _view_id: fallbackViewId
+      });
+    }
+  }, [fallbackViewId]);
   return (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_2__.InspectorControls, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelBody, {
     title: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('WPForms View Details'),
     initialOpen: true
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.PanelRow, null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("fieldset", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
     className: "wpf-view-selector",
     label: "Select View",
-    value: _view_id,
+    value: attributes._view_id || '',
     onChange: updateViewId,
     options: viewsList,
     __nextHasNoMarginBottom: true
@@ -61,7 +76,7 @@ function Edit() {
   }, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", null, (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)("h2", null, "WPForms Views")), (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_5__.SelectControl, {
     className: "wpf-view-selector",
     label: "",
-    value: _view_id,
+    value: attributes._view_id || '',
     onChange: updateViewId,
     options: viewsList
   })));
@@ -157,7 +172,7 @@ module.exports = window["wp"]["i18n"];
   \************************/
 /***/ (function(module) {
 
-module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/views-block","version":"0.1.0","title":"WPForms Views","category":"widgets","icon":"editor-table","description":"Display WPForms View","supports":{"html":false},"textdomain":"views-block","editorScript":"file:./index.js","editorStyle":"file:./index.css"}');
+module.exports = JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"create-block/views-block","version":"0.1.0","title":"WPForms Views","category":"widgets","icon":"editor-table","description":"Display WPForms View","supports":{"html":false},"textdomain":"views-block","editorScript":"file:./index.js","editorStyle":"file:./index.css","attributes":{"_view_id":{"type":"string","default":""}}}');
 
 /***/ })
 
