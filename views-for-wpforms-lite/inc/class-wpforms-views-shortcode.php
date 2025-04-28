@@ -46,7 +46,7 @@ class WPForms_Views_Shortcode {
 		$loop_rows        = $view_settings->sections->loop->rows;
 		$after_loop_rows  = $view_settings->sections->afterloop->rows;
 		$per_page         = $view_settings->viewSettings->multipleentries->perPage;
-
+		$sort_order       = isset($view_settings->viewSettings->sort)? $view_settings->viewSettings->sort : '';
 		if ( ! function_exists( 'wpforms' ) ) {
 			return 'Please install WPForms Pro to use Views';
 		}
@@ -69,17 +69,16 @@ class WPForms_Views_Shortcode {
 		);
 
 		// OrderBy Params
-		// if ( ! empty( $sort_order ) ) {
-		// foreach ( $sort_order as $sortrrow ) {
-		// if ( isset ( $sortrrow->field ) ) {
-		// $args['sort_order'][] = array(
-		// 'field' => $sortrrow->field,
-		// 'value' => $sortrrow->value,
-		// );
-		// }
-		// }
-
-		// }
+		if ( ! empty( $sort_order ) ) {
+			foreach ( $sort_order as $sortrrow ) {
+				if ( isset( $sortrrow->field ) ) {
+					$args['sort_order'][] = array(
+						'field_id'  => $sortrrow->field,
+						'direction' => $sortrrow->value,
+					);
+				}
+			}
+		}
 
 		// pagination
 		if ( ! empty( $_GET['pagenum'] ) && ! empty( $_GET['view_id'] ) && ( $this->view_id === $_GET['view_id'] ) ) {
@@ -351,12 +350,12 @@ class WPForms_Views_Shortcode {
 					break;
 				case 'entryDate':
 					$field_html .= '<div class="wpforms-view-field-value wpforms-view-field-type-entryDate-value">';
-					$field_html .=  $this->get_formatted_date( $entry->date, $fieldSettings, '', true );
+					$field_html .= $this->get_formatted_date( $entry->date, $fieldSettings, '', true );
 					$field_html .= '</div>';
 					break;
 				case 'entryUpdateDate':
 					$field_html .= '<div class="wpforms-view-field-value wpforms-view-field-type-entryUpdateDate-value">';
-					$field_html .=  $this->get_formatted_date( $entry->date_modified, $fieldSettings, '', true );
+					$field_html .= $this->get_formatted_date( $entry->date_modified, $fieldSettings, '', true );
 					$field_html .= '</div>';
 					break;
 			}

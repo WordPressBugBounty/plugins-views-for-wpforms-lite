@@ -4,7 +4,7 @@ Tags: wpforms, database, display entries, table
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.8
-Stable tag: 3.3.6
+Stable tag: 3.3.7
 License: GPLv2 or later
 
 Display and Edit WPForms Entries Directly on Your Website with No Coding Knowledge Needed.
@@ -168,6 +168,9 @@ No, you can create as many Views as you like &amp; use it anywhere on your site 
 3. Submissions shown in frontend.
 
 == Changelog ==
+3.3.7 (28th April 2025)
+Fix: Resolved an issue where sorting by form fields was not working.
+
 3.3.6 (8th April 2025)
 Fix: Resolved an issue where selecting a View in one View Block would update all View Blocks on the page in the Gutenberg editor.
 

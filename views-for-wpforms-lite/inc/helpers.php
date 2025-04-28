@@ -41,52 +41,9 @@ function wpforms_views_get_submissions( $args ) {
 	global $wpdb;
 	$form_id = $args['form_id'];
 
-	// if filter is used
-	if ( isset( $args['filter'] ) ) {
-		$limit  = ! empty( $args['posts_per_page'] ) ? absint( $args['posts_per_page'] ) : 25;
-		$offset = ! empty( $args['offset'] ) ? absint( $args['offset'] ) : 0;
-
-		$where              = array();
-		$join_sql           = array();
-		$i                  = 1;
-		$entry_table        = WPForms_Views_Common::get_entry_table_name();
-		$entry_fields_table = WPForms_Views_Common::get_entry_fields_table_name();
-		foreach ( $args['filter'] as $filter ) {
-			$field_id            = $filter['field'];
-			$comparison_operator = $filter['compare'];
-			$value               = $filter['value'];
-			$join[]              = "LEFT JOIN `$entry_fields_table` AS `m$i` ON ( `m$i`.`entry_id` = `t1`.`entry_id` AND `m$i`.`field_id` = '$field_id') ";
-			$where[]             = "(`m$i`.`field_id` = '$field_id' AND `m$i`.`value` $comparison_operator '$value')";
-			$i++;
-		}
-			// Don't display partial entries
-			$where[] = "`t1`.status != 'partial'";
-
-		$join_sql  = implode( ' ', $join );
-		$where_sql = implode( ' AND ', $where );
-		$sql_query = "SELECT `t1`.* FROM `$entry_table` AS `t1` $join_sql WHERE `t1`.`form_id` IN ($form_id) AND( $where_sql ) ORDER BY `t1`.`entry_id` DESC";
-		$results   = $wpdb->get_results( " {$sql_query} LIMIT {$offset},{$limit} " );
-
-		// Total entries count
-		$sql_query_for_total_rows   = "SELECT `t1`.* FROM `$entry_table` AS `t1` $join_sql WHERE `t1`.`form_id` IN ($form_id) AND( $where_sql ) ORDER BY `t1`.`entry_id` DESC";
-		$total_rows_results         = $wpdb->get_results( "{$sql_query_for_total_rows}" );
-		$submissions['total_count'] = count( $total_rows_results );
-		$submissions['subs']        = $results;
-		return $submissions;
-	}
-
 	$entries_args = array(
 		'form_id' => absint( $args['form_id'] ),
 	);
-
-	// Narrow entries by user if user_id shortcode attribute was used.
-	if ( ! empty( $args['user'] ) ) {
-		if ( $args['user'] === 'current' && is_user_logged_in() ) {
-			$entries_args['user_id'] = get_current_user_id();
-		} else {
-			$entries_args['user_id'] = absint( $args['user'] );
-		}
-	}
 
 	// TODO --- Show single entry only
 	if ( ! empty( $args['submission_id'] ) ) {
@@ -103,9 +60,69 @@ function wpforms_views_get_submissions( $args ) {
 		$entries_args['offset'] = absint( $args['offset'] );
 	}
 
+	// Add order by parameters
+	if ( ! empty( $args['sort_order'] ) ) {
+		foreach ( $args['sort_order'] as $sort ) {
+			$field_id  = $sort['field_id'];
+			$direction = $sort['direction'];
+			if ( in_array( $field_id, array( 'submission_id', 'entryId', 'entryid' ) ) ) {
+				$entries_args['order']   = $direction;
+				$entries_args['orderby'] = 'entry_id';
+			} elseif ( $field_id === 'entryDate' ) {
+				$entries_args['order']   = $direction;
+				$entries_args['orderby'] = 'date';
+			} else {
+				// For custom fields in the non-filter case, we need to use a custom query
+				// This is a simple implementation for the lite version
+				$entry_table        = WPForms_Views_Common::get_entry_table_name();
+				$entry_fields_table = WPForms_Views_Common::get_entry_fields_table_name();
+
+				$limit   = isset( $entries_args['number'] ) ? absint( $entries_args['number'] ) : 25;
+				$offset  = isset( $entries_args['offset'] ) ? absint( $entries_args['offset'] ) : 0;
+				$form_id = absint( $args['form_id'] );
+
+				$sql_query = "SELECT e.* FROM {$entry_table} e
+                              LEFT JOIN {$entry_fields_table} f ON e.entry_id = f.entry_id
+                              WHERE e.form_id = {$form_id}
+                              AND e.status != 'trash'
+                              AND e.status != 'partial'";
+
+				if ( ! empty( $entries_args['entry_id'] ) ) {
+					$entry_id   = absint( $entries_args['entry_id'] );
+					$sql_query .= " AND e.entry_id = {$entry_id}";
+				}
+
+				$sql_query .= " AND f.field_id = {$field_id}
+                              GROUP BY e.entry_id
+                              ORDER BY f.value {$direction}
+                              LIMIT {$offset},{$limit}";
+
+				$results = $wpdb->get_results( $sql_query );
+
+				// Total entries count - simplified for lite version
+				$count_query = "SELECT COUNT(DISTINCT e.entry_id) FROM {$entry_table} e
+                               LEFT JOIN {$entry_fields_table} f ON e.entry_id = f.entry_id
+                               WHERE e.form_id = {$form_id}
+                               AND e.status != 'trash'
+                               AND e.status != 'partial'";
+
+				if ( ! empty( $entries_args['entry_id'] ) ) {
+					$count_query .= " AND e.entry_id = {$entry_id}";
+				}
+
+				$count_query .= " AND f.field_id = {$field_id}";
+
+				$total_entries_count = $wpdb->get_var( $count_query );
+
+				$submissions['total_count'] = $total_entries_count;
+				$submissions['subs']        = $results;
+
+				return $submissions;
+			}
+		}
+	}
+
 	// Get all entries for the form, according to arguments defined.
-	// There are many options available to query entries. To see more, check out
-	// the get_entries() function inside class-entry.php (https://a.cl.ly/bLuGnkGx).
 	$entries = wpforms()->entry->get_entries( $entries_args );
 
 	$total_entries_count = wpforms()->entry->get_entries( $entries_args, true );
