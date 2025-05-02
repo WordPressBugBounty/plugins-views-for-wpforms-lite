@@ -239,10 +239,11 @@ class WPForms_Views_Shortcode {
 		}
 
 		if ( $view_type == 'table' ) {
-			$field_html .= '<td>';
-		}
 		$width       = ! empty( $field->fieldSettings->columnWidth ) ? $field->fieldSettings->columnWidth : 'auto';
-		$field_html .= '<div  style="width:' . $width . '" class="wpforms-view-field-cont  field-' . $form_field_id . ' ' . $class . '">';
+			$field_html .= '<td  style="width:' . $width . '">';
+		}
+
+		$field_html .= '<div  class="wpforms-view-field-cont  field-' . $form_field_id . ' ' . $class . '">';
 
 		// check if it's a form field
 		if ( ! empty( $entry_fields ) && is_array( $entry_fields ) && is_numeric( $form_field_id ) ) {
@@ -270,14 +271,14 @@ class WPForms_Views_Shortcode {
 				$file_parts       = pathinfo( $field_value_pre_processed );
 				$image_extensions = array( 'jpg', 'png', 'gif' );
 
-				if ( ( isset( $fieldSettings->displayFileType ) && $fieldSettings->displayFileType == 'Image' ) || in_array( $file_parts['extension'], $image_extensions ) ) {
-					// $field_value = '<img class="wpforms-view-img" src="' . $field_value_pre_processed . '">';
+				if ( ( isset( $fieldSettings->displayFileType ) && $fieldSettings->displayFileType == 'Image' )  ) {
+					$width    = ! empty( $fieldSettings->imageWidth ) ? $fieldSettings->imageWidth : '100%';
 					$field_value_array = array();
 					foreach ( $entry_fields[ $form_field_id ]['value_raw'] as $file ) {
 						if ( empty( $file['value'] ) || empty( $file['file_original'] ) ) {
 							return '';
 						}
-						$field_value_array[] = '<img class="wpforms-view-img" src="' . wp_strip_all_tags( $file['value'] ) . '">';
+						$field_value_array[] = '<img style="width:' . $width . '" class="wpforms-view-img" src="' . wp_strip_all_tags( $file['value'] ) . '">';
 
 					}
 					if ( ! empty( $field_value_array ) ) {
