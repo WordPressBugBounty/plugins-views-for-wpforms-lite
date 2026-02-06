@@ -7,6 +7,7 @@ class WPForms_Views_Shortcode {
 	public $form;
 	public $form_data;
 	private $seq_no = 1;
+	public $submissions_count = 0;
 	function __construct() {
 		add_shortcode( 'wpforms-views', array( $this, 'shortcode' ), 10 );
 	}
@@ -46,7 +47,8 @@ class WPForms_Views_Shortcode {
 		$loop_rows        = $view_settings->sections->loop->rows;
 		$after_loop_rows  = $view_settings->sections->afterloop->rows;
 		$per_page         = $view_settings->viewSettings->multipleentries->perPage;
-		$sort_order       = isset($view_settings->viewSettings->sort)? $view_settings->viewSettings->sort : '';
+		$sort_order       = isset( $view_settings->viewSettings->sort ) ? $view_settings->viewSettings->sort : '';
+		$norecords_text   = ! empty( $view_settings->viewSettings->multipleentries->noRecordsText ) ? $view_settings->viewSettings->multipleentries->noRecordsText : 'No records found';
 		if ( ! function_exists( 'wpforms' ) ) {
 			return 'Please install WPForms Pro to use Views';
 		}
@@ -91,7 +93,8 @@ class WPForms_Views_Shortcode {
 		// Get Submissions
 		$entrys = wpforms_views_get_submissions( $args );
 		if ( empty( $entrys['subs'] ) ) {
-			return '<div class="views-no-records-cnt">' . __( 'No records found.', 'views-for-wpforms-lite' ) . '</div>';
+			return '<div class="views-no-records-cnt">' . esc_html_x( $norecords_text, 'Message shown when no records are found in table view', 'views-for-wpforms-lite' ) . '</div>';
+			// return '<div class="views-no-records-cnt">' . __( 'No records found.', 'views-for-wpforms-lite' ) . '</div>';
 		}
 
 		$this->submissions_count = $entrys['total_count'];
@@ -239,7 +242,7 @@ class WPForms_Views_Shortcode {
 		}
 
 		if ( $view_type == 'table' ) {
-		$width       = ! empty( $field->fieldSettings->columnWidth ) ? $field->fieldSettings->columnWidth : 'auto';
+			$width       = ! empty( $field->fieldSettings->columnWidth ) ? $field->fieldSettings->columnWidth : 'auto';
 			$field_html .= '<td  style="width:' . $width . '">';
 		}
 
@@ -255,7 +258,8 @@ class WPForms_Views_Shortcode {
 			}
 
 			$field_value_pre_processed = wp_strip_all_tags( isset( $entry_fields[ $form_field_id ]['value'] ) ? $entry_fields[ $form_field_id ]['value'] : '' );
-			$field_value               = apply_filters( 'wpforms_html_field_value', wp_strip_all_tags( $field_value_pre_processed ), $this->form_data['fields'][ $form_field_id ], $this->form_data, 'entry-frontend-table' );
+			$field_data                = isset( $entry_fields[ $form_field_id ] ) ? $entry_fields[ $form_field_id ] : $this->form_data['fields'][ $form_field_id ];
+			$field_value               = apply_filters( 'wpforms_html_field_value', wp_strip_all_tags( $field_value_pre_processed ), $field_data, $this->form_data, 'entry-frontend-table' );
 
 			// $form_field_type = $entry_fields[ $form_field_id ]['type'];
 			$form_field_type = $this->form_data['fields'][ $form_field_id ]['type'];
@@ -271,8 +275,8 @@ class WPForms_Views_Shortcode {
 				$file_parts       = pathinfo( $field_value_pre_processed );
 				$image_extensions = array( 'jpg', 'png', 'gif' );
 
-				if ( ( isset( $fieldSettings->displayFileType ) && $fieldSettings->displayFileType == 'Image' )  ) {
-					$width    = ! empty( $fieldSettings->imageWidth ) ? $fieldSettings->imageWidth : '100%';
+				if ( ( isset( $fieldSettings->displayFileType ) && $fieldSettings->displayFileType == 'Image' ) ) {
+					$width             = ! empty( $fieldSettings->imageWidth ) ? $fieldSettings->imageWidth : '100%';
 					$field_value_array = array();
 					foreach ( $entry_fields[ $form_field_id ]['value_raw'] as $file ) {
 						if ( empty( $file['value'] ) || empty( $file['file_original'] ) ) {

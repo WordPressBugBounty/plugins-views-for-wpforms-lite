@@ -3,8 +3,8 @@ Contributors: aman086, webholics
 Tags: wpforms, database, display entries, table
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 6.8
-Stable tag: 3.4
+Tested up to: 6.9
+Stable tag: 3.4.4
 License: GPLv2 or later
 
 Display and Edit WPForms Entries Directly on Your Website with No Coding Knowledge Needed.
@@ -52,6 +52,7 @@ Get more features in [Pro version](https://formviewswp.com/pricing/?utm_source=w
 * [List View Format](https://formviewswp.com/docs/how-to-create-list-view-of-wpforms-entries/?utm_source=wordpress-plugin-repo)
 * [DataTable View Format](https://formviewswp.com/docs/how-to-create-a-datatable-view-of-wpforms-entries-in-frontend/?utm_source=wordpress-plugin-repo)
 * [Edit Entries from frontend](https://formviewswp.com/how-to-edit-wpforms-entries-from-site-frontend/?utm_source=wordpress-plugin-repo)
+* [25+ Premade Themes and Styler](https://formviewswp.com/docs/how-to-design-style-your-wpforms-view/)
 * [Delete Entries from frontend](https://formviewswp.com/docs/how-to-allow-users-to-delete-wpforms-entries-from-frontend/)
 * [Display only approved Entries](https://formviewswp.com/how-to-display-only-approved-wpforms-entries-using-views-for-wpforms/?utm_source=wordpress-plugin-repo)
 * [Display only User submitted Entries](https://formviewswp.com/how-to-display-only-user-submitted-entries-in-wpforms/?utm_source=wordpress-plugin-repo)
@@ -95,6 +96,12 @@ Display calculations like sum or average of field values in the table footer.
 
 = Display Conditions =
 Show field in view only if set conditions are matched.
+
+= Duplicate Entries =
+Duplicate Entries from your view.
+
+= Customize Field Value =
+Add any content before or field value inside view using Field Value Template.
 
 = Google Maps Add-on =
 Display data on Google Maps above or at bottom of View.
@@ -145,6 +152,12 @@ Yes, users can edit entries from the site frontend. You can set Access permissio
 = Can I Display only Logged-in user Entries in a View? =
 Yes, you can display only logged-in user entries in a view.
 
+= Can I use  Premade Themes? =
+Yes, you can select from 25+ premade table and list styling themes in pro version.
+
+= Can I use Custom CSS with Premade Themes? =
+Yes, you can display only logged-in user entries in a view in pro version.
+
 = Can I Display repeater fields values in a View? =
 Yes, repeater fields are supported and values are displayed in a nicely formatted blocks in View.
 
@@ -168,6 +181,22 @@ No, you can create as many Views as you like &amp; use it anywhere on your site 
 3. Submissions shown in frontend.
 
 == Changelog ==
+3.4.4 (30th Jan 2026)
+Fix: Fixed php warning on undefined variable
+New: Added icons to the setting sidebar
+
+3.4.3 (8th Jan 2026)
+Fix: Resolved issue with displaying Radio field values in View.
+
+3.4.2.1 (6th Dec 2025)
+Added: Compatibility with WordPress 6.9
+
+3.4.2 (28th Nov 2025)
+Fixed an issue where the custom "No records found" message was not displaying as configured in the View settings.
+
+3.4.1 (3rd November 2025)
+Minor optimizations
+
 3.4 (7th August 2025)
 Added info about new WPForms services we provide.
 
