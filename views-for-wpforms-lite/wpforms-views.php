@@ -3,7 +3,7 @@
  * Plugin Name: Views for WPForms Lite
  * Plugin URI: https://formviewswp.com/
  * Description: Display WPForms Entries on site frontend.
- * Version: 3.4.4
+ * Version: 3.4.5
  * Author: WebHolics
  * Author URI: https://formviewswp.com/
  * Text Domain: views-for-wpforms-lite

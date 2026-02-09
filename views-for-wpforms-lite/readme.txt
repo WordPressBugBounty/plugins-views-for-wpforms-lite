@@ -4,7 +4,7 @@ Tags: wpforms, database, display entries, table
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.9
-Stable tag: 3.4.4
+Stable tag: 3.4.5
 License: GPLv2 or later
 
 Display and Edit WPForms Entries Directly on Your Website with No Coding Knowledge Needed.
@@ -181,6 +181,9 @@ No, you can create as many Views as you like &amp; use it anywhere on your site 
 3. Submissions shown in frontend.
 
 == Changelog ==
+3.4.5 (9th Feb 2026)
+Fix: Removed global styles from grid css library
+
 3.4.4 (30th Jan 2026)
 Fix: Fixed php warning on undefined variable
 New: Added icons to the setting sidebar
