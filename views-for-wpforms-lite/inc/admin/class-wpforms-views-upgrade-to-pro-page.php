@@ -171,12 +171,12 @@ a.wpforms-views-upsell {
 }
 
 .view-pricing .pricing-table {
-    display: flex;
-    justify-content: center;
-    /* align-items: center; */
-    flex-wrap: wrap;
-    gap: 20px;
-    padding-top: 60px;
+	display: flex;
+	justify-content: center;
+	/* align-items: center; */
+	flex-wrap: wrap;
+	gap: 20px;
+	padding-top: 60px;
 }
 
 .view-pricing .pricing-plan {
@@ -443,6 +443,23 @@ a.wpforms-views-upsell {
 					</div>
 				</div>
 
+								<div class="wpforms-views-pro-feature-cont">
+					<div class="wpforms-views-pro-feature">
+					<div class="license">
+							<span class="license-label">Personal</span>
+						</div>
+						<p class="icon"><i class="fa fa-html5 fa-2x"> </i></p>
+						<h5 class="feature-name">Custom Designs</h5>
+						<p class="feature-desc"> Apply ready-made themes with a single click. Customize table styles (borders, colors, headers, hover effects) without writing any CSS.</p>
+
+					<div class="actions">
+						<div class="action-button">
+							<a href="https://formviewswp.com/docs/how-to-design-style-your-wpforms-view/?utm_source=wordpress-plugin-dashboard&utm_medium=wpforms-views-upgrade-page&utm_campaign=wpforms-views-lite-version" target="_blank" class="">Learn more</a>
+						</div>
+					</div>
+				</div>
+								</div>
+
 				<div class="wpforms-views-pro-feature-cont">
 					<div class="wpforms-views-pro-feature">
 					<div class="license">
@@ -461,87 +478,10 @@ a.wpforms-views-upsell {
 				</div>
 
 
-
-
-
-
 			</div>
 			<a class="wpforms-views-upsell" href="https://formviewswp.com/pricing/?utm_source=wordpress-plugin-dashboard&utm_medium=wpforms-views-upgrade-page&utm_campaign=wpforms-views-lite-version"> Buy Views for WPForms Pro</a>
 		</div>
-<div class="view-pricing">
-  <h1 class="pricing-heading">Choose Your Plan</h1>
-	<div class="pricing-table">
-		<div class="pricing-plan">
-			<h2 class="plan-title">Personal</h2>
-			<p class="plan-price">$59</p>
-			<ul class="plan-features">
-				<li>1 Site</li>
-				<li>Table & List View</li>
-				<li>Sorting & Filtering</li>
-				<li>Search Widget</li>
-				<li>Limit entries created by logged-in users</li>
-			</ul>
-			<a href="https://formviewswp.com/checkout?addon-license=1863" target="_blank"><button class="plan-button">Buy Now</button></a>
-		</div>
-		<div class="pricing-plan">
-			<h2 class="plan-title">Professional</h2>
-			<p class="plan-price">$99</p>
-			<ul class="plan-features">
-				<li>5 Sites</li>
-				<li>Table & List View</li>
-				<li>Sorting & Filtering</li>
-				<li>Search Widget</li>
-				<li>Limit entries created by logged-in users</li>
-				<li>Approve Entries Add-on</li>
-				<li>Google Maps Add-on</li>
-				<li>Calculations Add-on</li>
-			</ul>
-			<a href="https://formviewswp.com/checkout?addon-license=1867" target="_blank"><button class="plan-button">Buy Now</button></a>
-		</div>
-		<div class="pricing-plan">
-			<h2 class="plan-title">Developer</h2>
-			<p class="plan-price">$199</p>
-			<ul class="plan-features">
-				<li>20 Sites</li>
-				<li>Table & List View</li>
-				<li>Sorting & Filtering</li>
-				<li>Search Widget</li>
-				<li>Limit entries created by logged-in users</li>
-				<li>Approve Entries Add-on</li>
-				<li>Google Maps Add-on</li>
-				<li>Calculations Add-on</li>
-				<li>Edit Entries Add-on</li>
-				<li>Inline Edit Entries Add-on</li>
-				<li>DataTable Add-on</li>
-				<li>Single Entry Add-on</li>
-				<li>Delete Entries Add-on</li>
-			</ul>
-			<a href="https://formviewswp.com/checkout?addon-license=1868" target="_blank"><button class="plan-button">Buy Now</button></a>
-		</div>
-			<!-- <div class="pricing-plan">
-			<h2 class="plan-title">Full Access</h2>
-			<p class="plan-price">$399</p>
-			<ul class="plan-features">
-				<li>5 Sites</li>
-				<li>Table & List View</li>
-				<li>Sorting & Filtering</li>
-				<li>Search Widget</li>
-				<li>Limit entries created by logged-in users</li>
-				<li>Approve Entries Add-on</li>
-				<li>Google Maps Add-on</li>
-				<li>Calculations Add-on</li>
-				<li>Edit Entries Add-on</li>
-				<li>Inline Edit Entries Add-on</li>
-				<li>DataTable Add-on</li>
-				<li>Single Entry Add-on</li>
-				<li>Delete Entries Add-on</li>
-				<li>Import Entries Add-on</li>
-				<li>Charts Add-on(coming soon)</li>
-			</ul>
-			<a href="https://formviewswp.com/checkout?addon-license=16001" target="_blank"><button class="plan-button">Buy Now</button></a>
-		</div> -->
-	</div>
-</div>
+
 
 		<div style="text-align: center;margin-left:35px;margin-top:35px;">
 		<div style="margin-top:50px"> <h2 style="font-size: 36px;">New Plugin: WPForms Import Entries</h2> </div>

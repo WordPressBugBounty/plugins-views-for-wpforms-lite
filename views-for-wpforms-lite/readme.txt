@@ -4,7 +4,7 @@ Tags: wpforms, database, display entries, table
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 6.9
-Stable tag: 3.4.5
+Stable tag: 3.4.6
 License: GPLv2 or later
 
 Display and Edit WPForms Entries Directly on Your Website with No Coding Knowledge Needed.
@@ -77,6 +77,9 @@ Inline Edit Entries without page refresh. The user will never leave the page &am
 
 = Delete WPForms Entries =
 Allow users to delete their submitted entries from the site frontend. Logged-in users can delete their entries and administrators can delete any entry.
+
+= Premade themes & Custom Designs =
+Apply premade Table and List View themes with single click. Select from 25+ premade design templates or create your own custom designs without any css Knowledge.
 
 = Search WPForms Entries =
 Display Search Form in your View to allow users to filter view data by any field value. Options also include searching by Entry Submission Date or Date Range e.g. Display entries submitted between two dates.
@@ -181,6 +184,9 @@ No, you can create as many Views as you like &amp; use it anywhere on your site 
 3. Submissions shown in frontend.
 
 == Changelog ==
+3.4.6 (11th March 2026)
+New: Added information about design themes
+
 3.4.5 (9th Feb 2026)
 Fix: Removed global styles from grid css library
 
