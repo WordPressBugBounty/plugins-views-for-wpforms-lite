@@ -6,7 +6,7 @@ class WPForms_Views_Shortcode {
 	public $table_heading_added;
 	public $form;
 	public $form_data;
-	private $seq_no = 1;
+	private $seq_no           = 1;
 	public $submissions_count = 0;
 	function __construct() {
 		add_shortcode( 'wpforms-views', array( $this, 'shortcode' ), 10 );
@@ -278,12 +278,14 @@ class WPForms_Views_Shortcode {
 				if ( ( isset( $fieldSettings->displayFileType ) && $fieldSettings->displayFileType == 'Image' ) ) {
 					$width             = ! empty( $fieldSettings->imageWidth ) ? $fieldSettings->imageWidth : '100%';
 					$field_value_array = array();
-					foreach ( $entry_fields[ $form_field_id ]['value_raw'] as $file ) {
-						if ( empty( $file['value'] ) || empty( $file['file_original'] ) ) {
-							return '';
-						}
-						$field_value_array[] = '<img style="width:' . $width . '" class="wpforms-view-img" src="' . wp_strip_all_tags( $file['value'] ) . '">';
+					if ( ! empty( $entry_fields[ $form_field_id ]['value_raw'] ) ) {
+						foreach ( $entry_fields[ $form_field_id ]['value_raw'] as $file ) {
+							if ( empty( $file['value'] ) || empty( $file['file_original'] ) ) {
+								return '';
+							}
+							$field_value_array[] = '<img style="width:' . $width . '" class="wpforms-view-img" src="' . wp_strip_all_tags( $file['value'] ) . '">';
 
+						}
 					}
 					if ( ! empty( $field_value_array ) ) {
 						$field_value = implode( '<br>', $field_value_array );

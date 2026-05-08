@@ -63,8 +63,13 @@ function wpforms_views_get_submissions( $args ) {
 	// Add order by parameters
 	if ( ! empty( $args['sort_order'] ) ) {
 		foreach ( $args['sort_order'] as $sort ) {
-			$field_id  = $sort['field_id'];
-			$direction = $sort['direction'];
+			$field_id  = isset( $sort['field_id'] ) ? $sort['field_id'] : '';
+			$direction = isset( $sort['direction'] ) && 'DESC' === strtoupper( $sort['direction'] ) ? 'DESC' : 'ASC';
+
+			if ( empty( $field_id ) && '0' !== $field_id ) {
+				continue;
+			}
+
 			if ( in_array( $field_id, array( 'submission_id', 'entryId', 'entryid' ) ) ) {
 				$entries_args['order']   = $direction;
 				$entries_args['orderby'] = 'entry_id';
@@ -76,43 +81,56 @@ function wpforms_views_get_submissions( $args ) {
 				// This is a simple implementation for the lite version
 				$entry_table        = WPForms_Views_Common::get_entry_table_name();
 				$entry_fields_table = WPForms_Views_Common::get_entry_fields_table_name();
+				$field_id           = absint( $field_id );
 
-				$limit   = isset( $entries_args['number'] ) ? absint( $entries_args['number'] ) : 25;
-				$offset  = isset( $entries_args['offset'] ) ? absint( $entries_args['offset'] ) : 0;
-				$form_id = absint( $args['form_id'] );
-
-				$sql_query = "SELECT e.* FROM {$entry_table} e
-                              LEFT JOIN {$entry_fields_table} f ON e.entry_id = f.entry_id
-                              WHERE e.form_id = {$form_id}
-                              AND e.status != 'trash'
-                              AND e.status != 'partial'";
-
-				if ( ! empty( $entries_args['entry_id'] ) ) {
-					$entry_id   = absint( $entries_args['entry_id'] );
-					$sql_query .= " AND e.entry_id = {$entry_id}";
+				if ( empty( $field_id ) ) {
+					continue;
 				}
 
-				$sql_query .= " AND f.field_id = {$field_id}
+				$limit    = isset( $entries_args['number'] ) ? absint( $entries_args['number'] ) : 25;
+				$offset   = isset( $entries_args['offset'] ) ? absint( $entries_args['offset'] ) : 0;
+				$form_id  = absint( $args['form_id'] );
+				$entry_id = ! empty( $entries_args['entry_id'] ) ? absint( $entries_args['entry_id'] ) : 0;
+
+				$sql_query  = "SELECT e.* FROM {$entry_table} e
+                              LEFT JOIN {$entry_fields_table} f ON e.entry_id = f.entry_id
+                              WHERE e.form_id = %d
+                              AND e.status != %s
+                              AND e.status != %s";
+				$sql_params = array( $form_id, 'trash', 'partial' );
+
+				if ( ! empty( $entry_id ) ) {
+					$sql_query   .= ' AND e.entry_id = %d';
+					$sql_params[] = $entry_id;
+				}
+
+				$sql_query   .= " AND f.field_id = %d
                               GROUP BY e.entry_id
                               ORDER BY f.value {$direction}
-                              LIMIT {$offset},{$limit}";
+                              LIMIT %d,%d";
+				$sql_params[] = $field_id;
+				$sql_params[] = $offset;
+				$sql_params[] = $limit;
 
-				$results = $wpdb->get_results( $sql_query );
+				$results = $wpdb->get_results( $wpdb->prepare( $sql_query, $sql_params ) );
 
 				// Total entries count - simplified for lite version
-				$count_query = "SELECT COUNT(DISTINCT e.entry_id) FROM {$entry_table} e
+				$count_query  = "SELECT COUNT(DISTINCT e.entry_id) FROM {$entry_table} e
                                LEFT JOIN {$entry_fields_table} f ON e.entry_id = f.entry_id
-                               WHERE e.form_id = {$form_id}
-                               AND e.status != 'trash'
-                               AND e.status != 'partial'";
+                               WHERE e.form_id = %d
+                               AND e.status != %s
+                               AND e.status != %s";
+				$count_params = array( $form_id, 'trash', 'partial' );
 
-				if ( ! empty( $entries_args['entry_id'] ) ) {
-					$count_query .= " AND e.entry_id = {$entry_id}";
+				if ( ! empty( $entry_id ) ) {
+					$count_query   .= ' AND e.entry_id = %d';
+					$count_params[] = $entry_id;
 				}
 
-				$count_query .= " AND f.field_id = {$field_id}";
+				$count_query   .= ' AND f.field_id = %d';
+				$count_params[] = $field_id;
 
-				$total_entries_count = $wpdb->get_var( $count_query );
+				$total_entries_count = $wpdb->get_var( $wpdb->prepare( $count_query, $count_params ) );
 
 				$submissions['total_count'] = $total_entries_count;
 				$submissions['subs']        = $results;
