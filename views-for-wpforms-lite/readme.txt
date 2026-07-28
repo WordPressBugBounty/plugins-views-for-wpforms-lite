@@ -3,7 +3,7 @@ Contributors: aman086, webholics
 Tags: wpforms, database, display entries, table
 Requires at least: 5.0
 Requires PHP: 5.6
-Tested up to: 6.9
+Tested up to: 7.0
 Stable tag: 3.4.7
 License: GPLv2 or later
 
