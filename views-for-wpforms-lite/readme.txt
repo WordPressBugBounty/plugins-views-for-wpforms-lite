@@ -4,7 +4,7 @@ Tags: wpforms, database, display entries, table
 Requires at least: 5.0
 Requires PHP: 5.6
 Tested up to: 7.0
-Stable tag: 3.4.7
+Stable tag: 3.4.8
 License: GPLv2 or later
 
 Display and Edit WPForms Entries Directly on Your Website with No Coding Knowledge Needed.
@@ -187,6 +187,9 @@ No, you can create as many Views as you like &amp; use it anywhere on your site 
 3. Submissions shown in frontend.
 
 == Changelog ==
+3.4.8 (5th August 2026)
+Fix: Few Minor updates and improvements
+
 3.4.7 (8th May 2026)
 Security: tightened WPForms Views Lite permissions so only admins can create/manage view posts, and sanitized frontend view sorting to prevent authenticated SQL injection.
 
