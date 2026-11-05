@@ -2,9 +2,9 @@
 Contributors: aman086, webholics
 Tags: wpforms, database, display entries, table
 Requires at least: 5.0
-Requires PHP: 5.6
+Requires PHP: 7.4
 Tested up to: 7.1
-Stable tag: 3.4.9
+Stable tag: 3.4.9.1
 License: GPLv2 or later
 
 Display and Edit WPForms Entries Directly on Your Website with No Coding Knowledge Needed.
@@ -187,6 +187,9 @@ No, you can create as many Views as you like &amp; use it anywhere on your site 
 3. Submissions shown in frontend.
 
 == Changelog ==
+3.4.9.1 (2 November 2026)
+Enhancement: Added new logo.
+
 3.4.9 (22 August 2026)
 Fix: Fixed the embed icon overflowing outside the button container.
 

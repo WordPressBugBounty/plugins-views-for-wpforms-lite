@@ -29,7 +29,7 @@ class WPForms_Views_Lite_List_Table {
 			var view_forms = '<?php echo addslashes( json_encode( $view_forms ) ); ?>';
 		</script>
 			<?php
-			echo '<div class="wpforms-views-header"><img  src="' . WPFORMS_VIEWS_URL_LITE . '/assets/images/logo.jpg" class="wpforms-views-logo" alt="logo" >
+			echo '<div class="wpforms-views-header"><img  src="' . WPFORMS_VIEWS_URL_LITE . '/assets/images/logo.png" class="wpforms-views-logo" alt="logo" >
 		<a class=" add_new_wpform_view">Add New</a></div>
 	';
 		}
